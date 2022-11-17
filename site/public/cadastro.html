@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Animix | Cadastro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/cadastro.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="js/funcoes.js"></script>
+    <script src="https://kit.fontawesome.com/4ea0191552.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="container">
+                <a href="index.html" class="navbar-brand">
+                    <img src="assets/animix-logo-preto.svg" alt="logo" width="150">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="ctn row py-5 mt-4 align-items-center">
+            <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+                <img src="assets/buzz.png" alt="" class="img-fluid">
+            </div>
+            <div class="col-md-7 col-lg-6 ml-auto">
+                <h1 class="titulo">Crie sua conta!</h1>
+                <form action="#">
+                    <div class="row">
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fas fa-solid fa-building"></i>
+                                </span>
+                            </div>
+                            <input id="name_ipt" type="text" name="firstname" placeholder="Nome da empresa"
+                                class="form-control bg-white border-left-0 border-md">
+                        </div>
+
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fas fa-solid fa-id-card"></i>
+                                </span>
+                            </div>
+                            <input id="cnpj_ipt" type="text" name="lastname" placeholder="CNPJ"
+                                class="form-control bg-white border-left-0 border-md">
+                        </div>
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-envelope text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="email_ipt" type="email" name="email" placeholder="Email"
+                                class="form-control bg-white border-left-0 border-md">
+                        </div>
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fas fa-solid fa-building"></i>
+                                </span>
+                            </div>
+                            <input id="logradouro_ipt" type="tel" name="phone" placeholder="Logradouro"
+                                class="form-control bg-white border-md border-left-0 pl-3">
+                        </div>
+                        <div class="input-group col-lg-12 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0" required>
+                                    <i class="fa fa-phone-square text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="telefone_ipt" type="telefone" name="telefone" placeholder="Telefone"
+                                class="form-control bg-white border-md border-left-0 pl-3">
+                        </div>
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="password_ipt" type="password" name="password" placeholder="Senha"
+                                class="form-control bg-white border-left-0 border-md">
+                        </div>
+                        <div class="input-group col-lg-6 mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                    <i class="fa fa-lock text-muted"></i>
+                                </span>
+                            </div>
+                            <input id="password_confirm_ipt" type="password" name="passwordConfirmation"
+                                placeholder="Confirme sua senha" class="form-control bg-white border-left-0 border-md">
+                        </div>
+                        <label for="mostrarSenha">
+                            <span class="remember">Mostrar senha <input onclick="mostrar()" type="checkbox" name="" id="mostrarSenha"></span>
+                        </label>
+                        <div class="form-group col-lg-12 mx-auto mb-0">
+                            <a onclick="cadastrar()" href="#" class="cad-btn btn btn-primary btn-block">
+                                <span class="font-weight-bold">Criar conta</span>
+                            </a>
+                        </div>
+                        <div class="text-center w-100">
+                            <p class="text-muted font-weight-bold">Já possui conta?<a href="login.html"
+                                    class="text-lg text-primary ml-2">Login</a></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+function mostrar() {
+    var senha = document.getElementById("password_ipt");
+
+    if (senha.type == "password") {
+        senha.type = "text";
+    } else {
+        senha.type = "password";
+    }
+
+}
+
+    function cadastrar() {
+        var nomeEmpresa = name_ipt.value;
+        var cnpj = cnpj_ipt.value;
+        var emailVar = email_ipt.value;
+        var logradouro = logradouro_ipt.value;
+        var telefone = telefone_ipt.value;
+        var senhaVar = password_ipt.value;
+        var confirmacaoSenhaVar = password_confirm_ipt.value;
+        var validado = true;
+
+
+        if (nomeEmpresa == "") {
+            document.getElementById('name_ipt').style.borderColor = "red";
+            validado = false;
+        }
+        if (cnpj.length != 18) {
+            document.getElementById('cnpj_ipt').style.borderColor = "red";
+            validado = false;
+        }
+         if (emailVar == "" || !emailVar.includes('@')) {
+            document.getElementById('email_ipt').style.borderColor = "red";
+            validado = false;
+        }
+         if (logradouro == "") {
+            document.getElementById('logradouro_ipt').style.borderColor = "red";
+            validado = false;
+        }
+         if (telefone.length < 9) {
+            document.getElementById('telefone_ipt').style.borderColor = "red";
+            validado = false;
+        }
+         if (senhaVar != confirmacaoSenhaVar || senhaVar < 6) {
+            document.getElementById('password_ipt').style.borderColor = "red";
+            document.getElementById('password_confirm_ipt').style.borderColor = "red";
+            validado = false;
+
+        } else if (validado)
+
+            fetch("/usuarios/cadastrar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nomeEmpresa,
+                    cnpjServer: cnpj,
+                    logradouroServer: logradouro,
+                    telefoneServer: telefone,
+                    emailServer: emailVar,
+                    senhaServer: senhaVar
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    setTimeout(function () {
+                        window.location = "login.html";
+                    }, 1000);
+                } else {
+                    alert("erro");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+    }
+    
+ 
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/cleave.js@1.6.0/dist/cleave.min.js"></script>
+<script>
+    var cleave = new Cleave('#telefone_ipt', {
+    delimiters: ['(', ')', ' ','-'],
+    blocks: [0, 2,0, 5, 4],
+    uppercase: true
+});
+</script>
+<script>
+    var cleave = new Cleave('#cnpj_ipt', {
+    delimiters: ['.', '.', '/','-'],
+    blocks: [2, 3, 3, 4,2],
+    uppercase: true
+});
+</script>

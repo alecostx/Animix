@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    var fkMaquina = sessionStorage.getItem('fkMaquina');
+</script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animix | Dashboard</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/4ea0191552.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/simpleheat.js"></script>
+    <script src="demo/data.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body onload="obterdados(fkMaquina), obterDadosGrafico(fkMaquina), infosMaquina(fkMaquina)">
+    <div class="sidebar">
+        <div class="logo_content">
+            <div class="logo">
+                <img src="../assets/logo-animix-transparente.png" alt="">
+            </div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav_list">
+            <li>
+                <a href="pre-dashboard.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Pré-Dashboard</span>
+                </a>
+                <span class="tooltip">Pré-Dashboard</span>
+            </li>
+            <li>
+                <a href="cadastro-funcionarios.html">
+                    <i class='bx bx-user-plus'></i>
+                    <span class="links_name">Adicionar Pessoas</span>
+                </a>
+                <span class="tooltip">Funcionários</span>
+            </li>
+            <li>
+                <a href="cadastro-maquinas.html">
+                    <i class='bx bx-laptop'></i>
+                    <span class="links_name">Adicionar Máquinas</span>
+                </a>
+                <span class="tooltip">Máquinas</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-support'></i>
+                    <span class="links_name">Suporte</span>
+                </a>
+                <span class="tooltip">Suporte</span>
+            </li>
+            <li id="toggle">
+                <a href="#">
+                    <i class="fa-solid fa-circle-half-stroke"></i>
+                    <span class="links_name">Modo escuro</span>
+                </a>
+                <span class="tooltip">Modo escuro</span>
+            </li>
+            <li>
+                <a href="../index.html">
+                    <i class='bx bx-exit' id="log_out"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <main>
+        <div class="charts-container">
+            <div class="kpis">
+                <div class="kpi-card">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <div class="text-temp">
+                        <h5>Quantidade de processos</h5>
+                        <h1 id="qtdprocessos"></h1>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fa-solid fa-cubes-stacked"></i>
+                    <div class="text-temp">
+                        <h5>Quantidade de serviços</h5>
+                        <h1 id="qtdservicos"></h1>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fa-solid fa-temperature-arrow-up"></i>
+                    <div class="text-temp">
+                        <h5>Maior temperatura</h5>
+                        <h1 id="maiortemp"></h1>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <div class="text-temp">
+                        <h5>Maior uso de disco</h5>
+                        <h1 id="maiordisco"></h1>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fa-solid fa-memory"></i>
+                    <div class="text-temp">
+                        <h5>Maior uso de memoria</h5>
+                        <h1 id="maiormemoria"></h1>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fa-solid fa-microchip"></i>
+                    <div class="text-temp">
+                        <h5>Maior uso de processador</h5>
+                        <h1 id="maiorprocessador"></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="warning-msg" style="display: none;">
+                <i class="fa fa-warning"></i>
+                This is a warning message.
+            </div>
+            <div class="mid-graphs">
+                <div class="graph-left">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="graph-right">
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+            <div class="bottom-graphs">
+                <div class="card">
+                    <canvas id="myChart3"></canvas>
+                </div>
+                <div class="card">
+                    <canvas id="myChart4"></canvas>
+                </div>
+
+            </div>
+        </div>
+        <div class="graphs-container">
+
+            <div class="left-section">
+                <div class="info-card">
+                    <h4> <i class="fa-solid fa-laptop"></i> Sistema operacional: <span id="sistema"></span> </h4>
+                    <h4> <i class="fa-solid fa-copyright"></i> Fabricante: <span id="fabricante"></span> </h4>
+                    <h4> <i class="fa-solid fa-cube"></i> Arquitetura: <span id="arquitetura"></span> bits</h4>
+                    <h4> <i class="fa-solid fa-flag-checkered"></i> Inicializado: <span
+                            id="inicializado"></span></h4>
+                </div>
+                <div class="quick-access">
+                    <h3>Acesse outras máquinas</h3>
+                    <div class="top">
+                        <div class="maquina-critica"></div>
+                        <div class="maquina-critica"></div>
+                        <div class="maquina-alerta"></div>
+                    </div>
+                    <div class="bottom">
+                        <div class="maquina-alerta"></div>
+                        <div class="maquina-alerta"></div>
+                        <a href="pre-dashboard.html">
+                            <div class="outro"><i class="fa-solid fa-ellipsis fa-5x"></i></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section">
+
+                <div class="heatmap">
+                    <div class="options">
+                        <input oninput="kk()" onchange="kk()" type="range" id="tink" class="iptRange" value="1" min="10"
+                            max="20"><br />
+                        <input oninput="kk2()" type="text" id="valor" value="100" style="display: none;"><br />
+                        <input type="range" id="blurr" value="19" min="10" max="50" style="display: none;">
+                    </div>
+                    <div class="placa1">
+
+                        <!--HEATMAP: COMEÇO -->
+                        <div class="mapa">
+                            <canvas id="canvas" class="heatt" width=460 height=450></canvas>
+                            <p id="budget">Renderização: . . .</p>
+                            <div class="fim2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+<script>
+    var rangeSlider = document.getElementById("iptRange");
+    var rangeBullet = document.getElementById("rs-bullet");
+
+    rangeSlider.addEventListener("input", showSliderValue, false);
+
+    function showSliderValue() {
+        rangeBullet.innerHTML = iptRange.value;
+        var bulletPosition = (iptRange.value / iptRange.max);
+        rangeBullet.style.left = (bulletPosition * 578) + "px";
+    }
+
+    // pode colocar isso em qualquer lugar msm
+    function kk2() {
+
+        var radius = get('valor');
+
+        heat.radius(+radius.value);
+        frame = frame || window.requestAnimationFrame(draw);
+
+        if (changeType > 11) {
+            diva.style.display = 'none'
+        }
+    }
+
+    function kk(params) {
+        if (document.getElementById("tink").value == 10) {
+            document.getElementById("valor").value = 3;
+            budget.innerHTML = "Renderização:  . . ."
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 11) {
+            document.getElementById("valor").value = 6;
+            budget.innerHTML = "Renderização: 10:00 - 11:00"
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 12) {
+            document.getElementById("valor").value = 7;
+            budget.innerHTML = "Renderização: 11:00 - 12:00"
+
+            kk2()
+
+        }
+        if (document.getElementById("tink").value == 13) {
+            document.getElementById("valor").value = 8;
+            budget.innerHTML = "Renderização: 12:00 - 13:00"
+
+            kk2()
+
+        }
+        if (document.getElementById("tink").value == 14) {
+            document.getElementById("valor").value = 10;
+            budget.innerHTML = "Renderização: 13:00 - 14:00"
+
+            kk2()
+
+        }
+        if (document.getElementById("tink").value == 15) {
+            document.getElementById("valor").value = 11;
+            budget.innerHTML = "Renderização: 14:00 - 15:00"
+
+            kk2()
+
+        }
+        if (document.getElementById("tink").value == 16) {
+            document.getElementById("valor").value = 10;
+            budget.innerHTML = "Renderização: 15:00 - 16:00"
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 17) {
+            document.getElementById("valor").value = 9;
+            budget.innerHTML = "Renderização: 16:00 - 17:00"
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 18) {
+            document.getElementById("valor").value = 10;
+            budget.innerHTML = "Renderização: 17:00 - 18:00"
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 19) {
+            document.getElementById("valor").value = 8;
+            budget.innerHTML = "Renderização: 18:00 - 19:00"
+
+            kk2()
+        }
+        if (document.getElementById("tink").value == 20) {
+            document.getElementById("valor").value = 6;
+            budget.innerHTML = "Renderização: 19:00 - 20:00"
+
+            kk2()
+        }
+    }
+                // Não esqueça de linkar os dos src's abaixo, sendo eles "simpleheat.js e "demo/data"
+</script>
+<script>
+
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+    function get(id) {
+        return document.getElementById(id);
+    }
+
+    var heat = simpleheat('canvas').data(data00).max(15),
+        frame;
+
+    function draw() {
+        console.time('draw');
+        heat.draw();
+        console.timeEnd('draw');
+        frame = null;
+    }
+
+    draw();
+
+    get('canvas').onclick = function (e) {
+        heat.add([e.layerX, e.layerY, 1]);
+        frame = frame || window.requestAnimationFrame(draw);
+    };
+
+</script>
+<script>
+    localStorage.setItem('theme', 'light');
+    let btn = document.querySelector("#btn");
+    let sidebar = document.querySelector(".sidebar");
+
+    btn.onclick = function (params) {
+        sidebar.classList.toggle("active");
+    }
+</script>
+<script>
+    const labels = [
+
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Memoria em tempo real',
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderColor: 'rgb(85, 21, 66)',
+            data: [],
+        }]
+    };
+    const data2 = {
+        labels: labels,
+        datasets: [{
+            label: 'Processador em tempo real',
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderColor: 'rgb(85, 21, 66)',
+            data: [],
+        }]
+    };
+    const data3 = {
+        labels: labels,
+        datasets: [{
+            label: 'Escrita em tempo real',
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderColor: 'rgb(85, 21, 66)',
+            data: [],
+        },
+        {
+            label: 'Leitura em tempo real',
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderColor: 'rgb(85, 21, 66)',
+            data: [],
+        }]
+
+    };
+    const data4 = {
+        labels: labels,
+        datasets: [{
+            label: 'Temperatura em tempo real',
+            backgroundColor: 'rgb(255, 255, 255)',
+            borderColor: 'rgb(85, 21, 66)',
+            data: [],
+        }]
+    };
+    const data5 = {
+        labels: labels,
+        datasets: [{
+            label: 'A definir',
+            data: [],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+    const config2 = {
+        type: 'line',
+        data: data2,
+        options: {}
+    };
+    const config3 = {
+        type: 'line',
+        data: data3,
+        options: {}
+    };
+    const config4 = {
+        type: 'line',
+        data: data4,
+        options: {}
+    };
+    const config5 = {
+        type: 'bar',
+        data: data5,
+        options: {}
+    };
+</script>
+<script>
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+    const myChart2 = new Chart(
+        document.getElementById('myChart2'),
+        config2
+    );
+    const myChart3 = new Chart(
+        document.getElementById('myChart3'),
+        config3
+    );
+    const myChart4 = new Chart(
+        document.getElementById('myChart4'),
+        config4
+    );
+    const myChart5 = new Chart(
+        document.getElementById('myChart5'),
+        config5
+    );
+
+    setInterval(() => {
+        obterdados(fkMaquina), atualizarGrafico(fkMaquina, data, data2, data3, data4, data5, myChart, myChart2, myChart3, myChart4, myChart5)
+    }, 1500);
+
+    function obterdados(fkMaquina) {
+        fetch(`/cards/tempo-real/${fkMaquina}`)
+            .then(resposta => {
+                var maiorTemp = document.getElementById('maiortemp');
+                var qtdProcessos = document.getElementById('qtdprocessos');
+                var qtdServicos = document.getElementById('qtdservicos');
+                var maiorDisco = document.getElementById('maiordisco');
+                var maiorProcessador = document.getElementById('maiorprocessador');
+                var maiorMemoria = document.getElementById('maiormemoria');
+                fetch(`/cards/tempo-real-kpi/${fkMaquina}`).then(res2 => {
+                    if (resposta.ok) {
+                        resposta.json().then(resposta => {
+                            maiorProcessador.innerHTML = resposta[0].processador + "%";
+                            maiorMemoria.innerHTML = resposta[0].memoria + "%";
+                            maiorTemp.innerHTML = resposta[0].temperatura + "°";
+                            
+                        })
+                            res2.json().then(res2 => {
+                            qtdProcessos.innerHTML = res2[0].processos;
+                            qtdServicos.innerHTML = res2[0].servicos;
+                            maiorDisco.innerHTML = res2[0].disco + "%";
+                        });
+                    } else {
+
+                        console.error('Nenhum dado encontrado ou erro na API');
+                    }
+                })
+
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados do aquario p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function obterDadosGrafico(fkMaquina) {
+
+        fetch(`/graficos/ultimas/${fkMaquina}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    plotarGrafico(resposta, fkMaquina);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarGrafico(resposta, fkMaquina) {
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            labels.push(registro.momento_grafico);
+            data.datasets[0].data.push(registro.memoria);
+            data2.datasets[0].data.push(registro.processador);
+            data3.datasets[0].data.push(registro.leitura);
+            data3.datasets[1].data.push(registro.escrita);
+            data4.datasets[0].data.push(registro.temperatura);
+        }
+
+        setTimeout(() => atualizarGrafico(fkMaquina, data, data2, data3, data4, data5, myChart, myChart2, myChart3, myChart4, myChart5), 1500);
+    }
+
+    function atualizarGrafico(fkMaquina, data, data2, data3, data4, data5, myChart, myChart2, myChart3, myChart4, myChart5) {
+
+        fetch(`/graficos/tempo-real/${fkMaquina}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (novoRegistro) {
+
+
+                    data.labels.shift();
+                    data.labels.push(novoRegistro[0].momento_grafico);
+
+                    data.datasets[0].data.shift();
+                    data.datasets[0].data.push(novoRegistro[0].memoria);
+
+                    myChart.update();
+
+                    data2.labels.shift();
+                    data2.labels.push(novoRegistro[0].momento_grafico);
+
+                    data2.datasets[0].data.shift();
+                    data2.datasets[0].data.push(novoRegistro[0].processador);
+
+                    myChart2.update();
+
+                    data3.labels.shift();
+                    data3.labels.push(novoRegistro[0].momento_grafico);
+
+                    data3.datasets[0].data.shift();
+                    data3.datasets[0].data.push(novoRegistro[0].leitura);
+
+                    data3.datasets[1].data.shift();
+                    data3.datasets[1].data.push(novoRegistro[0].escrita);
+
+                    myChart3.update();
+
+                    data4.labels.shift();
+                    data4.labels.push(novoRegistro[0].momento_grafico);
+
+                    data4.datasets[0].data.shift();
+                    data4.datasets[0].data.push(novoRegistro[0].temperatura);
+
+                    myChart4.update();
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+                proximaAtualizacao = setTimeout(() => atualizarGrafico(fkMaquina, data, data2, data3, data4, data5, myChart, myChart2, myChart3, myChart4, myChart5), 1500);
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    const toggle = document.getElementById("toggle");
+
+    toggle.addEventListener("click", () => {
+        if (localStorage.getItem('theme') == 'light') {
+            document.documentElement.style.setProperty('--background_color', '#121212')
+            document.documentElement.style.setProperty('--background_color-card', '#242424')
+            document.documentElement.style.setProperty('--font-color-preta', '#ffffff')
+            document.documentElement.style.setProperty('--background_branca', '#101010')
+            document.documentElement.style.setProperty('--top-shadow', '#101010')
+            document.documentElement.style.setProperty('--bottom-shadow', '#121212')
+            document.documentElement.style.setProperty('--icon-color', '#ffffff')
+            localStorage.setItem('theme', 'dark')
+        } else {
+            document.documentElement.style.setProperty('--background_color', '#fff')
+            document.documentElement.style.setProperty('--background_color-card', '#fff')
+            document.documentElement.style.setProperty('--font-color-preta', '#101010')
+            document.documentElement.style.setProperty('--background_branca', '#fff')
+            document.documentElement.style.setProperty('--top-shadow', '#d6d6d6')
+            document.documentElement.style.setProperty('--bottom-shadow', '#ffffff')
+            document.documentElement.style.setProperty('--icon-color', '#551542')
+            localStorage.setItem('theme', 'light')
+        }
+    });
+
+    function infosMaquina(fkMaquina) {
+        fetch(`/maquinas/infosMaquina/${fkMaquina}`)
+            .then(resposta => {
+                resposta.json().then(function (res) {
+                    console.log(res[0])
+                    sistema.innerHTML = res[0].sistema;
+                    fabricante.innerHTML = res[0].fabricante;
+                    arquitetura.innerHTML = res[0].arquitetura;
+                    inicializado.innerHTML = res[0].inicializado;
+                })
+            })
+    }
+</script>
