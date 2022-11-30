@@ -14,6 +14,7 @@ body {
     min-width: 100vh;
     width: 100%;
     overflow-x: hidden;
+    background-color: var(--background_color);
 }
 
 .sidebar {
@@ -308,6 +309,7 @@ main {
     flex-direction: row;
     align-items: center;
     color: var(--font-color-preta);
+    justify-content: space-evenly;
 }
 
 .kpi-card {
